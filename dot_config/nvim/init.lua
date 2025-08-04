@@ -4,10 +4,6 @@ if vim.g.vscode then
   require("user.vscode_keymaps")
 end
 
-vim.opt.foldlevel = 20
-vim.opt.foldmethod = 'syntax'
--- vim.opt.foldexpr='nvim_treesitter#foldexpr()'
-
 vim.opt.autochdir = false
 vim.opt.clipboard = 'unnamedplus'
 vim.opt.relativenumber = true
