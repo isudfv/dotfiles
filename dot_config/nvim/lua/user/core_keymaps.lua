@@ -4,3 +4,4 @@ local nmap = {'n'}
 vim.keymap.set(map, 'H', '^')
 vim.keymap.set(map, 'L', 'g_')
 vim.keymap.set(nmap, '<leader>l', ':noh<CR>')
+vim.keymap.set(nmap, 'U', '<C-r>')

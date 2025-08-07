@@ -1,5 +1,13 @@
 return {
 	{
+		'Wansmer/treesj',
+		dependencies = { 'nvim-treesitter/nvim-treesitter' }, -- if you install parsers with `nvim-treesitter`
+		config = function()
+			require('treesj').setup()
+			vim.keymap.set('n', '<leader>tj', require('treesj').toggle)
+		end,
+	},
+	{
 		'kevinhwang91/nvim-ufo',
 		dependencies = 'kevinhwang91/promise-async',
 		config = function()
@@ -28,7 +36,7 @@ return {
 				local winid = require('ufo').peekFoldedLinesUnderCursor()
 				if not winid then
 					-- choose one of coc.nvim and nvim lsp
-					vim.fn.CocActionAsync('definitionHover') -- coc.nvim
+					-- vim.fn.CocActionAsync('definitionHover') -- coc.nvim
 					vim.lsp.buf.hover()
 				end
 			end)
