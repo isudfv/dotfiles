@@ -4,7 +4,7 @@ return {
 		dependencies = { 'nvim-treesitter/nvim-treesitter' }, -- if you install parsers with `nvim-treesitter`
 		config = function()
 			require('treesj').setup()
-			vim.keymap.set('n', '<leader>tj', require('treesj').toggle)
+			vim.keymap.set('n', '<leader>tj', require('treesj').toggle, { desc = "toggle join"})
 		end,
 	},
 	{

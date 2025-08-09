@@ -19,7 +19,12 @@ return {
 				callback = function()
 					vim.keymap.set('n', 'K', vim.lsp.buf.hover)
 					vim.keymap.set('n', 'gd', vim.lsp.buf.definition)
-					vim.keymap.set('n', '<leader>cd', vim.diagnostic.open_float)
+					vim.keymap.set('n', '<leader>cd', vim.diagnostic.open_float, { desc = "open diagnostic" })
+					vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, { desc = "open code action" })
+					vim.keymap.set("n", "<leader>dq", function()
+						vim.diagnostic.setqflist()
+						vim.cmd("copen")
+					end, { desc = "Diagnostics → Quickfix" })
 				end
 			})
 		end,
