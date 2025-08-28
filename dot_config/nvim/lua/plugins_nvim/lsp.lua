@@ -31,6 +31,8 @@ return {
 	},
 	{
 		"mason-org/mason-lspconfig.nvim",
+		-- lazy = true,
+		event = "BufEnter",
 		opts = {
 			-- ensure_installed = { "lua_ls", "clangd", "fixjson" },
 		},

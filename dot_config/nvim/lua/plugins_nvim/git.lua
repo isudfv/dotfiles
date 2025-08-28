@@ -7,9 +7,9 @@ return {
 			"sindrets/diffview.nvim", -- optional - Diff integration
 			"folke/snacks.nvim", -- optional
 		},
-		config = function()
-			vim.keymap.set(
-				"n", "<leader>td",
+		keys = {
+			{
+				"<leader>td",
 				function()
 					if next(require('diffview.lib').views) == nil then
 						vim.cmd('DiffviewOpen')
@@ -17,9 +17,9 @@ return {
 						vim.cmd('DiffviewClose')
 					end
 				end,
-				{ desc = "toggle diffview" }
-			)
-		end
+				desc = "toggle diffview"
+			},
+		},
 	},
 	{
 		"lewis6991/gitsigns.nvim"

@@ -8,6 +8,15 @@ local act = wezterm.action
 
 local panel_mods
 
+local function contains(tbl, val)
+    for i = 1, #tbl do
+        if tbl[i] == val then
+            return true
+        end
+    end
+    return false
+end
+
 if wezterm.target_triple == 'x86_64-pc-windows-msvc' then
 	-- Spawn a fish shell in login mode
 	config.default_prog = { 'pwsh' }
@@ -16,16 +25,36 @@ elseif
 	wezterm.target_triple == 'aarch64-apple-darwin' then
 	panel_mods = 'CMD'
 end
-
 config.keys = {
 	-- Make Option-Left equivalent to Alt-b which many line editors interpret as backward-word
-	{ key = 'LeftArrow',  mods = 'OPT',  action = act.SendString '\x1bb' },
+	{ key = 'LeftArrow',  mods = 'OPT',      action = act.SendString '\x1bb' },
 	-- Make Option-Right equivalent to Alt-f; forward-word
-	{ key = 'RightArrow', mods = 'OPT',  action = act.SendString '\x1bf' },
+	{ key = 'RightArrow', mods = 'OPT',      action = act.SendString '\x1bf' },
+	{ key = "Space",      mods = "OPT",      action = wezterm.action.DisableDefaultAssignment },
 	-- panes
+	-- { key = 'UpArrow',    mods = panel_mods,  action = wezterm.action.SplitPane { direction = 'Right'}, },
+	{
+		key = 'UpArrow',
+		mods = panel_mods,
+		action = act.PromptInputLine {
+			description = 'Enter director: Down, Right, Left, Up, default is Down',
+			-- initial_value = 'Right',
+			action = wezterm.action_callback(
+				function(window, pane, line)
+					local list = { "Down", "Right", "Left", "Up" }
+					local direction
+					if (contains(list, line)) then
+						direction = line
+					else
+						direction = "Down"
+					end
+					window:perform_action(act.SplitPane { direction = direction }, pane)
+				end
+			),
+		},
+	},
 	{ key = 'LeftArrow',  mods = panel_mods,  action = wezterm.action.ActivatePaneDirection 'Prev' },
 	{ key = 'RightArrow', mods = panel_mods,  action = wezterm.action.ActivatePaneDirection 'Next' },
-	{ key = 'UpArrow',    mods = panel_mods,  action = wezterm.action.SplitPane { direction = 'Right'}, },
 	{ key = 'DownArrow',  mods = panel_mods,  action = wezterm.action.CloseCurrentPane { confirm = true } },
 }
 
