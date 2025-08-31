@@ -207,6 +207,7 @@ return {
 					}
 				},
 				filesystem = {
+                    follow_current_file = { enabled = true },
 					window = {
 						mappings = {
 							["o"] = { "open_drop", nowait = true },

@@ -8,53 +8,23 @@ local act = wezterm.action
 
 local panel_mods
 
-local function contains(tbl, val)
-    for i = 1, #tbl do
-        if tbl[i] == val then
-            return true
-        end
-    end
-    return false
-end
-
 if wezterm.target_triple == 'x86_64-pc-windows-msvc' then
 	-- Spawn a fish shell in login mode
 	config.default_prog = { 'pwsh' }
-	panel_mods = 'ALT'
-elseif
-	wezterm.target_triple == 'aarch64-apple-darwin' then
+	panel_mods = 'CTRL'
+elseif wezterm.target_triple == 'aarch64-apple-darwin' then
 	panel_mods = 'CMD'
 end
+
 config.keys = {
 	-- Make Option-Left equivalent to Alt-b which many line editors interpret as backward-word
-	{ key = 'LeftArrow',  mods = 'OPT',      action = act.SendString '\x1bb' },
+	{ key = 'LeftArrow',  mods = 'OPT',  action = act.SendString '\x1bb' },
 	-- Make Option-Right equivalent to Alt-f; forward-word
-	{ key = 'RightArrow', mods = 'OPT',      action = act.SendString '\x1bf' },
-	{ key = "Space",      mods = "OPT",      action = wezterm.action.DisableDefaultAssignment },
+	{ key = 'RightArrow', mods = 'OPT',  action = act.SendString '\x1bf' },
 	-- panes
-	-- { key = 'UpArrow',    mods = panel_mods,  action = wezterm.action.SplitPane { direction = 'Right'}, },
-	{
-		key = 'UpArrow',
-		mods = panel_mods,
-		action = act.PromptInputLine {
-			description = 'Enter director: Down, Right, Left, Up, default is Down',
-			-- initial_value = 'Right',
-			action = wezterm.action_callback(
-				function(window, pane, line)
-					local list = { "Down", "Right", "Left", "Up" }
-					local direction
-					if (contains(list, line)) then
-						direction = line
-					else
-						direction = "Down"
-					end
-					window:perform_action(act.SplitPane { direction = direction }, pane)
-				end
-			),
-		},
-	},
 	{ key = 'LeftArrow',  mods = panel_mods,  action = wezterm.action.ActivatePaneDirection 'Prev' },
 	{ key = 'RightArrow', mods = panel_mods,  action = wezterm.action.ActivatePaneDirection 'Next' },
+	{ key = 'UpArrow',    mods = panel_mods,  action = wezterm.action.SplitPane { direction = 'Right'}, },
 	{ key = 'DownArrow',  mods = panel_mods,  action = wezterm.action.CloseCurrentPane { confirm = true } },
 }
 
@@ -69,13 +39,19 @@ config.initial_cols = 120
 config.initial_rows = 28
 
 -- or, changing the font size and color scheme.
+local font_size
 config.color_scheme = 'Macchiato'
-config.font_size = 16
 config.tab_max_width = 160
+if wezterm.target_triple == 'x86_64-pc-windows-msvc' then
+	font_size = 12
+elseif wezterm.target_triple == 'aarch64-apple-darwin' then
+	font_size = 16
+end
+config.font_size = font_size
 
 config.window_decorations = "RESIZE"
 config.window_frame = {
-	font_size = 16.0
+	font_size = font_size
 }
 -- translucent window effect
 config.window_background_opacity = 0.7
@@ -104,13 +80,15 @@ function tab_title(tab_info)
 	return title
 end
 
-wezterm.on(
-	'format-tab-title',
-	function(tab, tabs, panes, config, hover, max_width)
-		local title = tab_title(tab)
-		return title
-	end
-)
+if wezterm.target_triple == 'aarch64-apple-darwin' then
+	wezterm.on(
+		'format-tab-title',
+		function(tab, tabs, panes, config, hover, max_width)
+			local title = tab_title(tab)
+			return title
+		end
+	)
+end
 
 -- Finally, return the configuration to wezterm:
 return config
