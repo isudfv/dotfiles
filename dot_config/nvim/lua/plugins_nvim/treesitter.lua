@@ -96,5 +96,12 @@ return {
 				},
 			}
 		end
-	}
+	},
+	{
+		'Wansmer/treesj',
+		dependencies = { 'nvim-treesitter/nvim-treesitter' }, -- if you install parsers with `nvim-treesitter`
+		keys = {
+			{ "<leader>tj", function () require('treesj').toggle() end, desc = "toggle join" },
+		},
+	},
 }

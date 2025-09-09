@@ -2,6 +2,7 @@ return {
 	-- { 'rebelot/kanagawa.nvim' },
 	{
 		'sainnhe/gruvbox-material',
+		enabled = false,
 		lazy = false,
 		priority = 1000,
 		config = function()
@@ -9,6 +10,13 @@ return {
 			-- directly inside the plugin declaration.
 			vim.g.gruvbox_material_enable_italic = true
 			vim.cmd.colorscheme('gruvbox-material')
+		end
+	},
+	{
+		"miikanissi/modus-themes.nvim",
+		priority = 1000,
+		config = function ()
+			vim.cmd.colorscheme('modus')
 		end
 	}
 }
