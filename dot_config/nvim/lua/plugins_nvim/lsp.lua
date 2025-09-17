@@ -1,18 +1,22 @@
 return {
 	{
+		"folke/lazydev.nvim",
+		ft = "lua", -- only load on lua files
+		dependencies = {
+			{ 'DrKJeff16/wezterm-types', lazy = true },
+		},
+		opts = {
+			library = {
+				-- See the configuration section for more details
+				-- Load luvit types when the `vim.uv` word is found
+				{ path = "${3rd}/luv/library", words = { "vim%.uv" } },
+				{ path = 'wezterm-types',      mods = { 'wezterm' } },
+			},
+		},
+	},
+	{
 		'neovim/nvim-lspconfig',
 		dependencies = {
-			{
-				"folke/lazydev.nvim",
-				ft = "lua", -- only load on lua files
-				opts = {
-					library = {
-						-- See the configuration section for more details
-						-- Load luvit types when the `vim.uv` word is found
-						{ path = "${3rd}/luv/library", words = { "vim%.uv" } },
-					},
-				},
-			},
 		},
 		config = function()
 			vim.api.nvim_create_autocmd("LspAttach", {
@@ -27,12 +31,22 @@ return {
 					end, { desc = "Diagnostics → Quickfix" })
 				end
 			})
-            require('lspconfig').clangd.setup({
-                cmd = {'clangd', '--background-index', '--clang-tidy', '--log=verbose'},
-                init_options = {
-                    fallbackFlags = { '-std=c++17' }
-                }
-            })
+			require('lspconfig').lua_ls.setup {
+				settings = {
+					Lua = {
+						diagnostics = {
+							globals = { "vim" }, -- prevent "undefined global 'vim'"
+						},
+					},
+				},
+				single_file_support = true,
+			}
+			require('lspconfig').clangd.setup({
+				cmd = { 'clangd', '--background-index', '--clang-tidy', '--log=verbose' },
+				init_options = {
+					fallbackFlags = { '-std=c++17' }
+				}
+			})
 		end,
 	},
 	{
