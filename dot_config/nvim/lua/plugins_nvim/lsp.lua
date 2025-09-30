@@ -31,7 +31,7 @@ return {
 					end, { desc = "Diagnostics → Quickfix" })
 				end
 			})
-			require('lspconfig').lua_ls.setup {
+			vim.lsp.config('lua_ls', {
 				settings = {
 					Lua = {
 						diagnostics = {
@@ -40,8 +40,8 @@ return {
 					},
 				},
 				single_file_support = true,
-			}
-			require('lspconfig').clangd.setup({
+			})
+			vim.lsp.config('clangd', {
 				cmd = { 'clangd', '--background-index', '--clang-tidy', '--log=verbose' },
 				init_options = {
 					fallbackFlags = { '-std=c++17' }
