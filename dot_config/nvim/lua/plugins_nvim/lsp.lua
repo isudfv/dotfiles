@@ -47,6 +47,9 @@ return {
 					fallbackFlags = { '-std=c++17' }
 				}
 			})
+			vim.lsp.config('qmlls', {
+				cmd = { 'qmlls' },
+			})
 		end,
 	},
 	{

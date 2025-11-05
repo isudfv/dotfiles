@@ -23,7 +23,7 @@ return {
 	{
 		"m00qek/baleia.nvim",
 		version = "*",
-		enabled = true,
+		enabled = false,
 		config = function()
 			vim.g.baleia = require("baleia").setup({ log = 'DEBUG' })
 
@@ -45,5 +45,13 @@ return {
 				end,
 			})
 		end,
-	}
+	},
+	{
+		"xeind/nightingale.nvim",
+		enabled = true,
+		priority = 1000,
+		config = function ()
+			vim.cmd.colorscheme('nightingale')
+		end
+	},
 }

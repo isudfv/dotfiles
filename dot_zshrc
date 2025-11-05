@@ -12,6 +12,9 @@ export VISUAL="$EDITOR"
 PATH="$PATH:/Applications/WezTerm.app/Contents/MacOS"
 export PATH
 
+# homebrew python
+export PATH="$(brew --prefix)/opt/python@3.10/libexec/bin:$PATH"
+
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time Oh My Zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
@@ -130,3 +133,11 @@ source <(fzf --zsh)
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
+
+if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+
+# Added by coco installer
+export PATH="/Users/hanxixian/.local/bin:$PATH"

@@ -54,9 +54,9 @@ config.window_frame = {
 	font_size = font_size
 }
 -- translucent window effect
-config.window_background_opacity = 0.7
-config.macos_window_background_blur = 20
-config.win32_system_backdrop = 'Acrylic'
+-- config.window_background_opacity = 0.7
+-- config.macos_window_background_blur = 20
+-- config.win32_system_backdrop = 'Acrylic'
 
 -- This function returns the suggested title for a tab.
 -- It prefers the title that was set via `tab:set_title()`

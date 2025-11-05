@@ -5,3 +5,21 @@ vim.keymap.set(map, 'H', '^')
 vim.keymap.set(map, 'L', 'g_')
 vim.keymap.set(nmap, '<leader>l', ':noh<CR>')
 vim.keymap.set(nmap, 'U', '<C-r>')
+vim.keymap.set(nmap, '<leader>cf', function()
+	local filepath = vim.fn.expand('%:t')
+	vim.fn.setreg('+', filepath)
+	print('Copied file path: ' .. filepath)
+end, { desc = 'Copy file name' })
+
+vim.keymap.set(
+	nmap,
+	'<leader>cl',
+	function()
+		local filepath = vim.fn.expand('%:t')
+		local line_num = vim.fn.line('.')
+		local file_with_line = filepath .. ':' .. line_num
+		vim.fn.setreg('+', file_with_line)
+		print('Copied file path with line: ' .. file_with_line)
+	end,
+	{ desc = 'Copy file name:line' }
+)
