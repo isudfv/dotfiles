@@ -42,7 +42,7 @@ return {
 				single_file_support = true,
 			})
 			vim.lsp.config('clangd', {
-				cmd = { 'clangd', '--background-index', '--clang-tidy', '--log=verbose' },
+				cmd = { 'clangd', '--background-index', '--clang-tidy', '--log=verbose', '--header-insertion=never' },
 				init_options = {
 					fallbackFlags = { '-std=c++17' }
 				}

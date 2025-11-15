@@ -1,7 +1,7 @@
 return {
 	-- { 'rebelot/kanagawa.nvim' },
 	{
-		'sainnhe/gruvbox-material',
+		"sainnhe/gruvbox-material",
 		enabled = false,
 		lazy = false,
 		priority = 1000,
@@ -9,23 +9,23 @@ return {
 			-- Optionally configure and load the colorscheme
 			-- directly inside the plugin declaration.
 			vim.g.gruvbox_material_enable_italic = true
-			vim.cmd.colorscheme('gruvbox-material')
-		end
+			vim.cmd.colorscheme("gruvbox-material")
+		end,
 	},
 	{
 		"miikanissi/modus-themes.nvim",
 		enabled = false,
 		priority = 1000,
-		config = function ()
-			vim.cmd.colorscheme('modus')
-		end
+		config = function()
+			vim.cmd.colorscheme("modus")
+		end,
 	},
 	{
 		"m00qek/baleia.nvim",
 		version = "*",
 		enabled = false,
 		config = function()
-			vim.g.baleia = require("baleia").setup({ log = 'DEBUG' })
+			vim.g.baleia = require("baleia").setup({ log = "DEBUG" })
 
 			-- Command to colorize the current buffer
 			vim.api.nvim_create_user_command("BaleiaColorize", function()
@@ -50,8 +50,17 @@ return {
 		"xeind/nightingale.nvim",
 		enabled = true,
 		priority = 1000,
-		config = function ()
-			vim.cmd.colorscheme('nightingale')
-		end
+		config = function()
+			require("nightingale").setup({
+				-- Custom color overrides
+				overrides = function(colors)
+					local theme = colors.theme
+					return {
+						Visual = { bg = "#464646" },
+					}
+				end,
+			})
+			vim.cmd.colorscheme("nightingale")
+		end,
 	},
 }
