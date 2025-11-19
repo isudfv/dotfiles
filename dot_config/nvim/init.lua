@@ -6,14 +6,16 @@ end
 
 vim.opt.autochdir = false
 vim.opt.clipboard = 'unnamedplus'
-vim.opt.relativenumber = true
-vim.opt.tabstop = 4
-vim.opt.shiftwidth = 4
-vim.opt.number = true
+vim.opt.expandtab = true
 vim.opt.hls = true
+vim.opt.ignorecase = true
+vim.opt.jumpoptions = "stack"
+vim.opt.number = true
+vim.opt.relativenumber = true
+vim.opt.shiftwidth = 4
+vim.opt.tabstop = 4
 vim.opt.wildignorecase = true
 vim.opt.winborder = 'rounded'
-vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.wrap = false
 
@@ -36,3 +38,5 @@ vim.api.nvim_create_autocmd("BufReadPost", {
 		end
 	end,
 })
+
+-- vim.lsp.enable('sourcekit')

@@ -1,28 +1,30 @@
 return {
 	{
-		"rcarriga/nvim-dap-ui", 
-		dependencies = {"mfussenegger/nvim-dap", "nvim-neotest/nvim-nio"},
+		"rcarriga/nvim-dap-ui",
+        enabled = true,
+		dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" },
 		event = "VeryLazy",
-		config = function ()
-			local dap = require('dap')
-			local dapui = require('dapui')
+		config = function()
+			local dap = require("dap")
+			local dapui = require("dapui")
 
-			dapui.setup()
+			dapui.setup({
+			})
 
 			dap.adapters.lldb = {
-				type = 'executable',
-				command = 'codelldb', -- adjust as needed, must be absolute path
-				name = 'lldb'
+				type = "executable",
+				command = "codelldb", -- adjust as needed, must be absolute path
+				name = "lldb-dap",
 			}
 			dap.configurations.cpp = {
 				{
-					name = 'Launch',
-					type = 'lldb',
-					request = 'launch',
+					name = "Launch",
+					type = "lldb",
+					request = "launch",
 					program = function()
-						return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+						return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
 					end,
-					cwd = '${workspaceFolder}',
+					cwd = "${workspaceFolder}",
 					stopOnEntry = false,
 					args = {},
 
@@ -40,14 +42,14 @@ return {
 					-- runInTerminal = false,
 				},
 				{
-					name = 'Attach',
-					type = 'lldb',
-					request = 'attach',
-					pid = require('dap.utils').pick_process,
-					cwd = '${workspaceFolder}',
+					name = "Attach",
+					type = "lldb",
+					request = "attach",
+					pid = require("dap.utils").pick_process,
+					cwd = "${workspaceFolder}",
 					stopOnEntry = false,
 					args = {},
-				}
+				},
 			}
 			dap.listeners.before.attach.dapui_config = function()
 				dapui.open()

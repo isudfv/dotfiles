@@ -7,6 +7,7 @@ return {
 			"sindrets/diffview.nvim", -- optional - Diff integration
 			"folke/snacks.nvim", -- optional
 		},
+		event = "VeryLazy",
 		keys = {
 			{
 				"<leader>td",
@@ -19,6 +20,11 @@ return {
 				end,
 				desc = "toggle diffview"
 			},
+            {
+                "<leader>a",
+                "<cmd>Gitsigns blame<cr>",
+                desc = "Git blame"
+            }
 		},
 	},
 	{
